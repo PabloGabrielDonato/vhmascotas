@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if(Auth::check())
-        return redirect()->route('filament.admin.resources.students.index');
+        return redirect()->route('filament.admin.resources.mascota.index');
     else
         return redirect()->route('filament.admin.auth.login');
 });
