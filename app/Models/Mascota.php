@@ -21,4 +21,9 @@ class Mascota extends Model
     {
         return $this->hasMany(Citas::class);
     }
+    
+    public function jardincito():HasMany
+    {
+        return $this->hasMany(Jardincito::class);
+    }
 }

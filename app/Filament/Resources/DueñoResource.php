@@ -21,6 +21,8 @@ class DueñoResource extends Resource
 {
     protected static ?string $model = Dueño::class;
 
+    protected static ?string $navigationLabel = 'Tutor/es';
+
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationGroup = 'Gestión';

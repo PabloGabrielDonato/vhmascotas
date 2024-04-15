@@ -32,7 +32,9 @@ class CitasResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
 
-    protected static ?string $navigationGroup = 'Agenda';
+    protected static ?string $navigationGroup = 'VH Pelu';
+
+    
 
     public static function form(Form $form): Form
     {
@@ -46,13 +48,11 @@ class CitasResource extends Resource
 
                 TimePicker::make('hora_inicio')
                 ->required()
-                ->seconds(false)
-                ->native(false),
+                ->seconds(false),
 
                 TimePicker::make('hora_finalizacion')
                 ->required()
-                ->seconds(false)
-                ->native(false),
+                ->seconds(false),
 
                 TextInput::make('description')
                 ->label('Descripción')

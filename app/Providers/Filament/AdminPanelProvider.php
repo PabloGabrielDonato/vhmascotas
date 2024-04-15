@@ -28,7 +28,11 @@ class AdminPanelProvider extends PanelProvider
         Filament::serving(function () {
             Filament::registerNavigationGroups([
                 NavigationGroup::make()
-                    ->label('Agenda'),
+                    ->label('VH Pelu'),
+                NavigationGroup::make()
+                    ->label('VH Estadías'),
+                NavigationGroup::make()
+                    ->label('VH Jardincito'),
                 NavigationGroup::make()
                     ->label('Gestión'),
             ]);
