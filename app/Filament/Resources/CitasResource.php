@@ -53,7 +53,7 @@ class CitasResource extends Resource
                 ->required(),
 
                 Select::make('mascotas_id')
-                ->relationship('mascotas','nombre')
+                ->relationship('mascotas', 'nombre')
                 ->preload()
                 ->searchable()
                 ->native(false),
@@ -98,6 +98,11 @@ class CitasResource extends Resource
                 ->label('Estado')
                 ->badge()
                 ->sortable(),
+
+                TextColumn::make('mascotas.direccion')
+                ->label('Direccion traslado')
+                ->sortable()
+                ->searchable(),
             ])->defaultSort('hora_inicio', 'asc')
             ->filters([
                 Filter::make('citas_de_hoy')
@@ -108,8 +113,9 @@ class CitasResource extends Resource
                 })
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('Confirmar')
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\Action::make('Confirmar')
                     ->action(function(Citas $record){
                         $record->status = CitasStatus::Confirmada;
                         $record->save();
@@ -126,6 +132,8 @@ class CitasResource extends Resource
                     ->visible(fn($record) => $record->status != CitasStatus::Cancelada)
                     ->color('danger')
                     ->icon('heroicon-o-x-circle'),
+                ])
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

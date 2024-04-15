@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('raza');
             $table->string('especie');
             $table->string('avatar')->nullable();
+            $table->string('direccion');
             $table->foreignId('dueños_id')
                 ->nullable()
                 ->constrained('dueños')

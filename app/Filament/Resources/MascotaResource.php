@@ -43,6 +43,10 @@ class MascotaResource extends Resource
             TextInput::make('nombre')
             ->required(),
             
+            TextInput::make('direccion')
+            ->label('Direccion para traslado')
+            ->required(),
+            
             DatePicker::make('fecha_nacimiento')
             ->native(false)
             ->displayFormat('d m Y')
