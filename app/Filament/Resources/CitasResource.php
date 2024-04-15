@@ -24,6 +24,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TimePicker;
 use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\Section;
 
 class CitasResource extends Resource
 {
@@ -31,10 +32,15 @@ class CitasResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
 
+    protected static ?string $navigationGroup = 'Agenda';
+
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
+        ->schema([
+            Section::make('Datos')
+                ->description('Datos de la cita.')
+                ->schema([
                 DatePicker::make('fecha')
                 ->required(),
 
@@ -63,6 +69,7 @@ class CitasResource extends Resource
                 ->options(CitasStatus::class)
                 ->native(false)
                 ->visibleOn(Pages\EditCitas::class),
+                ])
             ]);
     }
 
@@ -156,5 +163,11 @@ class CitasResource extends Resource
             'create' => Pages\CreateCitas::route('/create'),
             'edit' => Pages\EditCitas::route('/{record}/edit'),
         ];
+    }
+
+    //Contador en barra lateral.
+    public static function getNavigationBadge(): ?string
+    {
+        return Citas::whereDate('fecha', Carbon::today())->count();
     }
 }

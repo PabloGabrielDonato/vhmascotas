@@ -17,9 +17,23 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Facades\Filament;
+use Filament\Navigation\NavigationGroup;
 
 class AdminPanelProvider extends PanelProvider
 {
+
+    public function boot(): void
+    {
+        Filament::serving(function () {
+            Filament::registerNavigationGroups([
+                NavigationGroup::make()
+                    ->label('Agenda'),
+                NavigationGroup::make()
+                    ->label('Gestión'),
+            ]);
+        });
+    }
     public function panel(Panel $panel): Panel
     {
         return $panel

@@ -28,6 +28,8 @@ class MascotaResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Gestión';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -139,5 +141,11 @@ class MascotaResource extends Resource
             'create' => Pages\CreateMascota::route('/create'),
             'edit' => Pages\EditMascota::route('/{record}/edit'),
         ];
+    }
+
+    //Contador en barra lateral.
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }

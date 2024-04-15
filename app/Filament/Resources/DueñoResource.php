@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\DueñoResource\Pages;
 use App\Filament\Resources\DueñoResource\RelationManagers;
 use App\Models\Dueño;
+use App\Models\Mascota;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,6 +23,8 @@ class DueñoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    protected static ?string $navigationGroup = 'Gestión';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -35,6 +38,7 @@ class DueñoResource extends Resource
                 TextInput::make('apellido')
                 ->required(),
                 TextInput::make('phone')
+                ->label('Teléfono')
                 ->tel()
                 ->required(),
                 ])
@@ -45,17 +49,22 @@ class DueñoResource extends Resource
     {
         return $table
             ->columns([
+
                 TextColumn::make('nombre')
                 ->label('Nombre')
                 ->sortable()
                 ->searchable(),
+                
                 TextColumn::make('apellido')
                 ->label('Apellido')
                 ->sortable()
                 ->searchable(),
+
                 TextColumn::make('phone')
                 ->label('Teléfono')
                 ->searchable(),
+                
+
             ])->paginated(false)
             ->filters([
                 //
@@ -84,5 +93,11 @@ class DueñoResource extends Resource
             'create' => Pages\CreateDueño::route('/create'),
             'edit' => Pages\EditDueño::route('/{record}/edit'),
         ];
+    }
+
+    //Contador en barra lateral.
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }
