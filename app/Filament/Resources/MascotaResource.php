@@ -21,6 +21,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TimePicker;
+use Filament\Forms\Components\Wizard;
 
 class MascotaResource extends Resource
 {
@@ -35,55 +36,68 @@ class MascotaResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+        ->columns(1)
         ->schema([
-            Section::make('Datos')
-                ->description('Datos de la mascota.')
-                ->schema([
-            
-            FileUpload::make('avatar')
-            ->image()
-            ->imageEditor(),
+            Wizard::make([
+                Wizard\Step::make('Datos de la mascota.')
+                    ->schema([
+                        FileUpload::make('avatar')
+                        ->image()
+                        ->imageEditor(),
 
-            TextInput::make('nombre')
-            ->required(),
-            
-            TextInput::make('direccion')
-            ->label('Direccion para traslado')
-            ->required(),
-            
-            DatePicker::make('fecha_nacimiento')
-            ->native(false)
-            ->displayFormat('d m Y')
-            ->required(),
-            
-            Select::make('especie')
-            ->native(false)
-            ->options([
-                'Perro'=>'Perro',  
-                'Gato'=>'Gato', 
-            ]),
-
-            TextInput::make('raza')
-            ->required(),
-
-            Select::make('dueños_id')
-            ->relationship('dueño','nombre')
-            ->native(false)
-            ->required()
-            ->searchable()
-            ->preload()
-            ->createOptionForm([
-                    Forms\Components\TextInput::make('nombre')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('apellido')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('phone')
-                        ->tel()
+                        TextInput::make('nombre')
                         ->required(),
-                ])
-            ])
+
+                        TextInput::make('direccion')
+                        ->label('Direccion para traslado')
+                        ->required(),
+
+                        DatePicker::make('fecha_nacimiento')
+                        ->native(false)
+                        ->displayFormat('d m Y')
+                        ->required(),
+
+                        Select::make('especie')
+                        ->native(false)
+                        ->options([
+                            'Perro'=>'Perro',  
+                            'Gato'=>'Gato', 
+                            ]),
+                    
+                        TextInput::make('raza')
+                        ->required(),
+                    
+                        Select::make('dueños_id')
+                        ->relationship('dueño','nombre')
+                        ->label('Tutor')
+                        ->native(false)
+                        ->required()
+                        ->searchable()
+                        ->preload()
+                        ->createOptionForm([
+                        Forms\Components\TextInput::make('nombre')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('apellido')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('phone')
+                            ->label('Teléfono')
+                            ->tel()
+                            ->required(),
+                            ])
+                        ]),
+                Wizard\Step::make('Ficha médica')
+                ->schema([
+                    Forms\Components\TextInput::make('vacunas'),
+
+                    Forms\Components\TextInput::make('alergias'),
+                    
+                    Forms\Components\TextInput::make('observaciones'),
+
+
+                ]),
+            ]),
         ]);
     }
 
@@ -120,6 +134,7 @@ class MascotaResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

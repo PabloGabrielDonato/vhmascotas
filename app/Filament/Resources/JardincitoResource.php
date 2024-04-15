@@ -28,7 +28,7 @@ class JardincitoResource extends Resource
     
     protected static ?string $navigationGroup = 'VH Jardincito';
 
-    protected static ?string $navigationLabel = 'Jardincito VH';
+    protected static ?string $navigationLabel = 'Animales anotados';
 
     public static function form(Form $form): Form
     {
