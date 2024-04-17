@@ -6,9 +6,11 @@ use App\Filament\Resources\JardincitoResource\Pages;
 use App\Filament\Resources\JardincitoResource\RelationManagers;
 use App\Models\Jardincito;
 use Filament\Forms;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -19,6 +21,7 @@ use Filament\Forms\Components\TimePicker;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Columns\SelectColumn;
 
 class JardincitoResource extends Resource
 {
@@ -66,7 +69,9 @@ class JardincitoResource extends Resource
 
     public static function table(Table $table): Table
     {
+
         return $table
+
             ->columns([
                 TextColumn::make('mascotas.nombre')
                 ->sortable()
@@ -90,6 +95,15 @@ class JardincitoResource extends Resource
                 ->label('Direccion traslado')
                 ->sortable()
                 ->searchable(),
+
+                SelectColumn::make('mascotas.state')
+                ->label('Estado')
+                ->selectablePlaceholder(false)
+                ->options([
+                    'activo' => 'activo',
+                    'inactivo' => 'inactivo',
+                ])
+                ->searchable(),
             ])
             ->filters([
                 SelectFilter::make('dia')
@@ -107,6 +121,7 @@ class JardincitoResource extends Resource
                 ]),
             ]);
     }
+
 
     public static function getRelations(): array
     {

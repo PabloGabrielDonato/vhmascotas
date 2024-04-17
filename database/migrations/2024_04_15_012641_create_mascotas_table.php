@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('alergias');
             $table->string('observaciones');
             $table->string('vacunas');
+            $table->enum('state', ['activo', 'inactivo'])->default('activo');
             $table->foreignId('dueños_id')
                 ->nullable()
                 ->constrained('dueños')
