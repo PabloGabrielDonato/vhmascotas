@@ -17,6 +17,8 @@ return new class extends Migration
             $table->time('hora_inicio');
             $table->time('hora_finalizacion');
             $table->string('description');
+            $table->string('servicios');
+            $table->string('condicion');
             $table->foreignId('mascotas_id')
                 ->constrained('mascotas')
                 ->cascadeOnDelete();

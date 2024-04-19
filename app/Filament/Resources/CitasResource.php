@@ -55,14 +55,25 @@ class CitasResource extends Resource
                 ->required()
                 ->seconds(false),
 
-                TextInput::make('description')
-                ->label('Descripción')
-                ->required(),
-
                 Select::make('mascotas_id')
                 ->relationship('mascotas', 'nombre')
                 ->preload()
                 ->searchable()
+                ->native(false),
+                
+                TextInput::make('servicios')
+                ->label('Servicios a realizar')
+                ->required(),
+
+                TextInput::make('description')
+                ->label('Observaciones')
+                ->required(),
+
+                Select::make('condicion')
+                ->options([
+                    'mensual' => 'mensual',
+                    'suelto' => 'suelto',
+                ])
                 ->native(false),
                 
                 Select::make('status')
@@ -77,8 +88,11 @@ class CitasResource extends Resource
     public static function table(Table $table): Table
     {
         return $table ->paginated(false)
+
+        ->defaultGroup('condicion')
             ->columns([
                 TextColumn::make('mascotas.nombre')
+                ->label('Animal')
                 ->sortable()
                 ->searchable(),
 
@@ -107,20 +121,27 @@ class CitasResource extends Resource
                 ->badge()
                 ->sortable(),
 
-                TextColumn::make('mascotas.direccion')
-                ->label('Direccion traslado')
+                TextColumn::make('condicion')
+                ->label('Turno')
                 ->sortable()
                 ->searchable(),
             ])->defaultSort('hora_inicio', 'asc')
             ->filters([
                 Filter::make('citas_de_hoy')
-                ->default(true)
-                ->query(function (Builder $query) {
-                    $today = Carbon::today();
-                    return $query->whereDate('fecha', $today);
-                })
+                    ->default(true)
+                    ->query(function (Builder $query) {
+                        $today = Carbon::today();
+                        return $query->where(function ($query) use ($today) {
+                            $query->where('condicion', 'Mensual')
+                                  ->orWhere(function ($query) use ($today) {
+                                      $query->where('condicion', 'suelto')
+                                            ->whereDate('fecha', $today);
+                                  });
+                        });
+                    }),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\Action::make('Confirmar')

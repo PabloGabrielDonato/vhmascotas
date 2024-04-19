@@ -27,7 +27,7 @@ class MascotaResource extends Resource
 {
     protected static ?string $model = Mascota::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-heart';
 
     protected static ?string $navigationLabel = 'Animales :D';
 
@@ -39,7 +39,7 @@ class MascotaResource extends Resource
         ->columns(1)
         ->schema([
             Wizard::make([
-                Wizard\Step::make('Datos de la mascota.')
+                Wizard\Step::make('Datos del animal.')
                     ->schema([
                         FileUpload::make('avatar')
                         ->image()

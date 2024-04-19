@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->enum('dia', ['lunes', 'miercoles']);
             $table->time('hora_inicio');
-            $table->time('hora_finalizacion');
-            
+            $table->time('hora_finalizacion');          
             $table->foreignId('mascotas_id')
                 ->constrained('mascotas')
                 ->cascadeOnDelete();

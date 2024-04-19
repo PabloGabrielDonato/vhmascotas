@@ -48,8 +48,7 @@ class JardincitoResource extends Resource
                     ->preload()
                     ->searchable()
                     ->native(false),
-
-
+                    
                     Select::make('dia')
                     ->options(['Lunes' => 'Lunes','Miércoles'=>'Miércoles'])
                     ->preload()
@@ -72,6 +71,7 @@ class JardincitoResource extends Resource
 
         return $table
 
+            ->defaultGroup('dia')
             ->columns([
                 TextColumn::make('mascotas.nombre')
                 ->sortable()
