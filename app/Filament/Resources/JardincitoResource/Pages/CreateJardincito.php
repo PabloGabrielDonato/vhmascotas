@@ -11,7 +11,6 @@ class CreateJardincito extends CreateRecord
     protected static string $resource = JardincitoResource::class;
     protected function getRedirectUrl(): string
     {
-        
         return $this->getResource()::getUrl('index');
     }
 }

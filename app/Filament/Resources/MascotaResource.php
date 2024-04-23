@@ -43,6 +43,7 @@ class MascotaResource extends Resource
                     ->schema([
                         FileUpload::make('avatar')
                         ->image()
+                        ->directory('avatars')
                         ->imageEditor(),
 
                         TextInput::make('nombre')
