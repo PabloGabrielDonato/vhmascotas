@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\MascotaResource\Pages;
 use App\Filament\Resources\MascotaResource\RelationManagers;
 use App\Models\Mascota;
+use Filament\Tables\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,6 +23,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Components\Wizard;
+use Filament\Tables\Columns\SelectColumn;
 
 class MascotaResource extends Resource
 {
@@ -82,6 +84,10 @@ class MascotaResource extends Resource
                         Forms\Components\TextInput::make('apellido')
                             ->required()
                             ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->label('Correo electrónico')
+                            ->required()
+                            ->maxLength(255),
                         Forms\Components\TextInput::make('phone')
                             ->label('Teléfono')
                             ->tel()
@@ -90,10 +96,40 @@ class MascotaResource extends Resource
                         ]),
                 Wizard\Step::make('Ficha médica')
                 ->schema([
-                    Forms\Components\TextInput::make('vacunas'),
+
+                    DatePicker::make('sextuple')
+                        ->label('Fecha vencimiento sextuple')
+                        ->displayFormat('d m Y')
+                        ->required(),
+                    DatePicker::make('antirrabica')
+                        ->label('Fecha vencimiento antirrabica')
+                        ->displayFormat('d m Y')
+                        ->required(),
+                    DatePicker::make('bordetella')
+                        ->label('Fecha vencimiento bordetella')
+                        ->displayFormat('d m Y')
+                        ->required(),
 
                     Forms\Components\TextInput::make('alergias'),
-                    
+
+                    Select::make('sociable_perros')
+                    ->native(false)
+                    ->options([
+                        'si'=>'si',  
+                        'no'=>'no', 
+                        ]),
+                    Select::make('sociable_humanos')
+                    ->native(false)
+                    ->options([
+                        'si'=>'si',  
+                        'no'=>'no', 
+                        ]),
+                    Select::make('castracion')
+                    ->native(false)
+                    ->options([
+                        'si'=>'si',  
+                        'no'=>'no', 
+                        ]),                    
                     Forms\Components\TextInput::make('observaciones'),
 
 
@@ -104,7 +140,18 @@ class MascotaResource extends Resource
 
     public static function table(Table $table): Table
     {
+        
         return $table
+        ->emptyStateHeading('No hay animales registrados.')
+            ->emptyStateDescription('Una vez que cargues uno, aparecera en esta tabla.')
+            ->emptyStateIcon('heroicon-o-heart')
+            ->emptyStateActions([
+                Action::make('create')
+                    ->label('Registrar un nuevo animal.')
+                    ->url(route('filament.admin.resources.mascotas.create'))
+                    ->icon('heroicon-m-plus')
+                    ->button(),
+            ])
             ->columns([
                 ImageColumn::make('avatar')
                 ->circular()
@@ -126,6 +173,15 @@ class MascotaResource extends Resource
 
                 TextColumn::make('dueño.nombre')
                 ->label('Nombre del dueño')
+                ->sortable()
+                ->searchable(),
+
+                SelectColumn::make('state')
+                ->label('Estado del animal')
+                ->options([
+                    'activo' => 'Activo',
+                    'inactivo' => 'Inactivo',
+                    ])
                 ->sortable()
                 ->searchable(),
             ])->paginated(false)

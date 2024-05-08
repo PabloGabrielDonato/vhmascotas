@@ -10,7 +10,6 @@ use Filament\Forms\Components\Group;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -40,8 +39,6 @@ class JardincitoResource extends Resource
             Section::make('Datos')
                 ->description('Datos del Jardincito.')
                 ->schema([
-
-
                     Select::make('mascotas_id')
                     ->label('Animales')
                     ->relationship('mascotas', 'nombre')
@@ -68,10 +65,7 @@ class JardincitoResource extends Resource
 
     public static function table(Table $table): Table
     {
-
         return $table
-
-            ->defaultGroup('dia')
             ->columns([
                 TextColumn::make('mascotas.nombre')
                 ->sortable()
@@ -80,7 +74,7 @@ class JardincitoResource extends Resource
                 TextColumn::make('dia')
                 ->sortable()
                 ->searchable(),
-
+                
                 TextColumn::make('hora_inicio')
                 ->time('h:i A')
                 ->sortable()
@@ -96,21 +90,19 @@ class JardincitoResource extends Resource
                 ->sortable()
                 ->searchable(),
 
-                SelectColumn::make('mascotas.state')
+                TextColumn::make('mascotas.state')
                 ->label('Estado')
-                ->selectablePlaceholder(false)
-                ->options([
-                    'activo' => 'activo',
-                    'inactivo' => 'inactivo',
-                ])
                 ->searchable(),
             ])
             ->filters([
-                SelectFilter::make('dia')
-                ->options([
-                'lunes' => 'lunes',
-                'miercoles' => 'miercoles',
-            ])
+                //SelectFilter::make('state')
+                //->native(false)
+                //->attribute('mascotas.state')
+                //->label('Estado del animal')
+                //->options([
+                    //'activo' => 'activo',
+                    //'inactivo' => 'inactivo',
+                    //])
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

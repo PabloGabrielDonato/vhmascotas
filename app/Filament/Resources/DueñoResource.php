@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\RichEditor;
+use Illuminate\Support\Facades\Mail;
 
 class DueñoResource extends Resource
 {
@@ -39,6 +41,10 @@ class DueñoResource extends Resource
 
                 TextInput::make('apellido')
                 ->required(),
+                
+                TextInput::make('email')
+                ->required(),
+
                 TextInput::make('phone')
                 ->label('Teléfono')
                 ->tel()
@@ -62,6 +68,11 @@ class DueñoResource extends Resource
                 ->sortable()
                 ->searchable(),
 
+                TextColumn::make('email')
+                ->label('Correo electrónico')
+                ->sortable()
+                ->searchable(),
+
                 TextColumn::make('phone')
                 ->label('Teléfono')
                 ->searchable(),
@@ -73,8 +84,11 @@ class DueñoResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                
+                
             ])
             ->bulkActions([
+                
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),

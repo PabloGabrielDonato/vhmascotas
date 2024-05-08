@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('jardincitos', function (Blueprint $table) {
             $table->id();
-            $table->enum('dia', ['lunes', 'miercoles']);
+            $table->enum('dia', ['lunes', 'miercoles','sabado']);
             $table->time('hora_inicio');
-            $table->time('hora_finalizacion');          
+            $table->time('hora_finalizacion');
+            $table->enum('state', ['activo', 'inactivo'])->default('activo'); 
             $table->foreignId('mascotas_id')
                 ->constrained('mascotas')
                 ->cascadeOnDelete();

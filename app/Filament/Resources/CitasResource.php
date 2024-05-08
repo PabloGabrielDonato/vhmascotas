@@ -88,8 +88,6 @@ class CitasResource extends Resource
     public static function table(Table $table): Table
     {
         return $table ->paginated(false)
-
-        ->defaultGroup('condicion')
             ->columns([
                 TextColumn::make('mascotas.nombre')
                 ->label('Animal')
@@ -97,7 +95,7 @@ class CitasResource extends Resource
                 ->searchable(),
 
                 TextColumn::make('fecha')
-                ->date('d M Y')
+                ->date('D d M')
                 ->sortable()
                 ->searchable(),
 
