@@ -128,14 +128,7 @@ class CitasResource extends Resource
                 Filter::make('citas_de_hoy')
                     ->default(true)
                     ->query(function (Builder $query) {
-                        $today = Carbon::today();
-                        return $query->where(function ($query) use ($today) {
-                            $query->where('condicion', 'Mensual')
-                                  ->orWhere(function ($query) use ($today) {
-                                      $query->where('condicion', 'suelto')
-                                            ->whereDate('fecha', $today);
-                                  });
-                        });
+                        $query->whereDate('fecha', Carbon::today());
                     }),
             ])
             ->actions([
@@ -186,8 +179,8 @@ class CitasResource extends Resource
     }
 
     //Contador en barra lateral.
-    public static function getNavigationBadge(): ?string
-    {
-        return Citas::whereDate('fecha', Carbon::today())->count();
-    }
+    public static function getNavigationBadge():?string
+{
+    return Citas::whereDate('fecha', Carbon::today())->count();
+}
 }

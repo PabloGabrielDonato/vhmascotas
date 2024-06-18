@@ -40,7 +40,7 @@ class JardincitoResource extends Resource
                 ->description('Datos del Jardincito.')
                 ->schema([
                     Select::make('mascotas_id')
-                    ->label('Animales')
+                    ->label('Animal por anotar')
                     ->relationship('mascotas', 'nombre')
                     ->preload()
                     ->searchable()
