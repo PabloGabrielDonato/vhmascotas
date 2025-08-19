@@ -1,0 +1,28 @@
+
+	// https://aka.ms/devcontainer.json
+{
+	"name": "VH MASCOTAS",
+	"dockerComposeFile": [
+		"../docker-compose.yml"
+	],
+	"service": "app.dev",
+	"workspaceFolder": "/var/www/html",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"mikestead.dotenv",
+				"bmewburn.vscode-intelephense-client",
+				"amiralizadeh9480.laravel-extra-intellisense",
+				"ryannaddy.laravel-artisan",
+				"onecentlin.laravel5-snippets",
+				"onecentlin.laravel-blade"
+			],
+			"settings": {}
+		}
+	},
+	"remoteUser": "root",
+	"postCreateCommand": "chown -R 1000:1000 /var/www/html 2>/dev/null || true",
+	"forwardPorts": [8000, 80, 5173, 3306, 9000]
+	// "runServices": [],
+	// "shutdownAction": "none",
+}

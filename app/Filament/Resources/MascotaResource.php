@@ -31,7 +31,7 @@ class MascotaResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-heart';
 
-    protected static ?string $navigationLabel = 'Animales :D';
+    protected static ?string $pluralLabel = 'Animales :D';
 
     protected static ?string $navigationGroup = 'Gestión';
 

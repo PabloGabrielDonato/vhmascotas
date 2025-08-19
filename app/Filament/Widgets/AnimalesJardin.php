@@ -26,7 +26,7 @@ class AnimalesJardin extends BaseWidget
             ->color('success')
             ->chart([7,3,4,5,6,8,18,29]),
             
-            Stat::make(label:'Total Animales en jardincito los miércoles', value: Jardincito::where('dia', 'lunes')->count())
+            Stat::make(label:'Total Animales en jardincito los miércoles', value: Jardincito::where('dia', 'Miércoles')->count())
 
             ->description('Cantidad de animales registrados en el jardincito de los miércoles')
             ->descriptionIcon('heroicon-m-arrow-trending-up')
