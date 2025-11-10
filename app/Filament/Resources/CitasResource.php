@@ -25,6 +25,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TimePicker;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Section;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 
 class CitasResource extends Resource
@@ -61,9 +62,21 @@ class CitasResource extends Resource
                 ->searchable()
                 ->native(false),
                 
-                TextInput::make('servicios')
+                Select::make('servicios')
                 ->label('Servicios a realizar')
-                ->required(),
+                ->options([
+                    'educacion_personalizada' => 'Educación personalizada',
+                    'evaluacion_adaptacion' => 'Evaluación y Adaptación (esto es para hospedaje jardín y Jardincito)',
+                    'peluqueria_bano_arreglos' => 'Peluquería: Baño y arreglos',
+                    'peluqueria_bano_deslanado' => 'Peluquería: Baño y deslanado',
+                    'peluqueria_bano_corte' => 'Peluquería: Baño y corte',
+                    'peluqueria_bano_desanudado_corte' => 'Peluquería: Baño, desanudado y corte',
+                    'corte_unas' => 'Corte de uñas',
+                    'corte' => 'Corte',
+                ])
+                ->required()
+                ->native(false)
+                ->searchable(),
 
                 TextInput::make('description')
                 ->label('Observaciones')
@@ -130,7 +143,7 @@ class CitasResource extends Resource
                     ->query(function (Builder $query) {
                         $query->whereDate('fecha', Carbon::today());
                     }),
-            ])
+            ], layout: FiltersLayout::AboveContent)->filtersFormColumns(3)
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\ActionGroup::make([

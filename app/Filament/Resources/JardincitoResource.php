@@ -27,7 +27,7 @@ class JardincitoResource extends Resource
     protected static ?string $model = Jardincito::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    
+
     protected static ?string $navigationGroup = 'VH Jardincito';
 
     protected static ?string $navigationLabel = 'Animales anotados';
@@ -35,31 +35,34 @@ class JardincitoResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-        ->schema([
-            Section::make('Datos')
-                ->description('Datos del Jardincito.')
-                ->schema([
-                    Select::make('mascotas_id')
-                    ->label('Animal por anotar')
-                    ->relationship('mascotas', 'nombre')
-                    ->preload()
-                    ->searchable()
-                    ->native(false),
-                    
-                    Select::make('dia')
-                    ->options(['Lunes' => 'Lunes','Miércoles'=>'Miércoles'])
-                    ->preload()
-                    ->searchable()
-                    ->native(false),
+            ->schema([
+                Section::make('Datos')
+                    ->description('Datos del Jardincito.')
+                    ->schema([
+                        Select::make('mascotas_id')
+                            ->label('Animal por anotar')
+                            ->relationship('mascotas', 'nombre')
+                            ->preload()
+                            ->searchable()
+                            ->native(false),
 
-                    TimePicker::make('hora_inicio')
-                    ->required()
-                    ->seconds(false),
+                        Select::make('dia')
+                            ->options([
+                                'Lunes' => 'Lunes',
+                                'Miércoles' => 'Miércoles'
+                            ])
+                            ->preload()
+                            ->searchable()
+                            ->native(false),
 
-                    TimePicker::make('hora_finalizacion')
-                    ->required()
-                    ->seconds(false),
-                ])
+                        TimePicker::make('hora_inicio')
+                            ->required()
+                            ->seconds(false),
+
+                        TimePicker::make('hora_finalizacion')
+                            ->required()
+                            ->seconds(false),
+                    ])
             ]);
     }
 
@@ -68,31 +71,31 @@ class JardincitoResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('mascotas.nombre')
-                ->sortable()
-                ->searchable(),
-                
+                    ->sortable()
+                    ->searchable(),
+
                 TextColumn::make('dia')
-                ->sortable()
-                ->searchable(),
-                
+                    ->sortable()
+                    ->searchable(),
+
                 TextColumn::make('hora_inicio')
-                ->time('h:i A')
-                ->sortable()
-                ->searchable(),
-                
+                    ->time('h:i A')
+                    ->sortable()
+                    ->searchable(),
+
                 TextColumn::make('hora_finalizacion')
-                ->time('h:i A')
-                ->sortable()
-                ->searchable(),
-                
+                    ->time('h:i A')
+                    ->sortable()
+                    ->searchable(),
+
                 TextColumn::make('mascotas.direccion')
-                ->label('Direccion traslado')
-                ->sortable()
-                ->searchable(),
+                    ->label('Direccion traslado')
+                    ->sortable()
+                    ->searchable(),
 
                 TextColumn::make('mascotas.state')
-                ->label('Estado')
-                ->searchable(),
+                    ->label('Estado')
+                    ->searchable(),
             ])
             ->filters([
                 //SelectFilter::make('state')
@@ -100,9 +103,9 @@ class JardincitoResource extends Resource
                 //->attribute('mascotas.state')
                 //->label('Estado del animal')
                 //->options([
-                    //'activo' => 'activo',
-                    //'inactivo' => 'inactivo',
-                    //])
+                //'activo' => 'activo',
+                //'inactivo' => 'inactivo',
+                //])
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
